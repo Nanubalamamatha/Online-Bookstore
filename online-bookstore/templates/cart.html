@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Your Cart</h1>
+    {% if cart %}
+        <div class="cart-container">
+            {% for item in cart %}
+                <div class="cart-item">
+                    <img src="{{ url_for('static', filename='books/' + item.image) }}" alt="{{ item.title }}">
+                    <h2>{{ item.title }}</h2>
+                    <p>Author: {{ item.author }}</p>
+                    <p>Price: ${{ item.price }}</p>
+                    <form action="/remove_from_cart/{{ item.id }}" method="post">
+                        <button type="submit">Remove</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+        <form action="/place_order" method="post">
+            <button type="submit">Place Order</button>
+        </form>
+    {% else %}
+        <p>Your cart is empty!</p>
+    {% endif %}
+    <a href="/">Continue Shopping</a>
+</body>
+</html>
